@@ -10,7 +10,5 @@ public class SpringCourseApplication {
 		SpringApplication.run(SpringCourseApplication.class, args);
 	}
 
-	int i=0;
-	int x=0;
 
 }
