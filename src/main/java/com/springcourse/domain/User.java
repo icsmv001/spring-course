@@ -3,6 +3,8 @@ package com.springcourse.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.springcourse.domain.enums.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +17,12 @@ public class User {
 	private Long id;
 	private String name;
 	private String password;
+	// relacionamento com class Role (enums)
+	private Role role;
 	private List<Request> request = new ArrayList<Request>();
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
 	
-	//construtor vazio
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
 
 	
 	
