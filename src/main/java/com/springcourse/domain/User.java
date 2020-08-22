@@ -50,12 +50,12 @@ public class User implements Serializable{
 	
 	// um usuario pode ter varios pedidos
 	// relaciona chava estrangeira da classe user com classe request
-	@OneToMany(mappedBy= "user")
+	@OneToMany(mappedBy= "owner")
 	private List<Request> request = new ArrayList<Request>();
 	
 	// um usuario pode ter varios pedidos
 	// relaciona chava estrangeira da classe user com classe requestStage
-	@OneToMany(mappedBy= "user")
+	@OneToMany(mappedBy= "owner")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
 	
 	
