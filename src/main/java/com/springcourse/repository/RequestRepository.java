@@ -15,7 +15,7 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
 	
 	// o metodo EXTENDS JPA, contem os metodos save, find e etc...
     //retorna lista de pedidos por id do usuario
-	public List<Request> findAllOwnerid(Long id);
+	public List<Request> findAllByOwnerid(Long id);
 	
 	// metodo, para query que deve pegar alteracao do estado do pedido
 	@Query("update Request set state=?2 where id=?1")
