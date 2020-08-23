@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,8 +38,10 @@ public class RequestStage implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	@Column(columnDefinition ="text")
 	private String description;
+	
 	
 	@Column(name="realization_Date",nullable = false)
 	@Temporal (TemporalType.TIMESTAMP)
@@ -51,12 +53,14 @@ public class RequestStage implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private RequestState state;
 	
-	@ManyToMany
-	@JoinColumn(name="request_id, nullablle = false")
-	private Request request;
+    @ManyToOne
+	@JoinColumn(name="request_id",  nullable = false)
+    private Request request;
 	
 
-	@ManyToMany
-	@JoinColumn(name="owner_id, nullablle = false")
-	private User owner;
+    @ManyToOne
+ 	@JoinColumn(name="user_id", nullable = false)
+	private User user;
+	
+	
 }

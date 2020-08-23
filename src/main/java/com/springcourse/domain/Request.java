@@ -41,13 +41,14 @@ public class Request implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length=75, nullable = false)
+	@Column(name="subject",length=75, nullable = false)
 	private String subject;
 	
-	@Column(columnDefinition = "text")
+	@Column(name="description",columnDefinition = "text")
 	private String description;
 	
-	@Column(name="creation_date",nullable = false)
+		
+	@Column(nullable = false)
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date creationDate;
 	
@@ -57,9 +58,12 @@ public class Request implements Serializable{
 	@Enumerated(EnumType.STRING)  // notacao para linkar atributo com class enum respectiva
 	private RequestState state;
 	
-	@ManyToOne
-	@JoinColumn(name="onwer_id", nullable=false)
-	private User onwer;
+	
+	
+	@ManyToOne // notacao de varios pedidos para um usuario
+	@JoinColumn(name="user_id", nullable=false) // nome da chave estrangeira do usuario
+	private User user;
+	
 	
 	@OneToMany(mappedBy="request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();

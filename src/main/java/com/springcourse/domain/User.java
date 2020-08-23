@@ -3,6 +3,7 @@ package com.springcourse.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,25 +41,31 @@ public class User implements Serializable{
 	@Column(length=75, nullable = false, unique = true)
 	private String email;
 	
-	@Column(length=75, nullable = false)
+	@Column(length=100, nullable = false)
 	private String password;
+	
 	
 	// relacionamento com class Role (enums)
 	@Column(length=20, nullable = false)
 	@Enumerated(EnumType.STRING)  // notacao para linkar atributo com class enum respectiva
 	private Role role;
 	
+	
+	
 	// um usuario pode ter varios pedidos
-	// relaciona chava estrangeira da classe user com classe request
-	@OneToMany(mappedBy= "owner")
+	// relaciona chava estrangeira da classe user com classe request. 
+	// na tabela/classe request, exist um campo nom nome user, que é a relacao
+	// entre as tabelas USER e REQUEST
+	@OneToMany(mappedBy= "user")
 	private List<Request> request = new ArrayList<Request>();
+	
 	
 	// um usuario pode ter varios pedidos
 	// relaciona chava estrangeira da classe user com classe requestStage
-	@OneToMany(mappedBy= "owner")
+	@OneToMany(mappedBy= "user")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
-	
-	
+
+		
 	
 
 	
