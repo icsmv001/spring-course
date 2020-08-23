@@ -56,13 +56,13 @@ public class User implements Serializable{
 	// relaciona chava estrangeira da classe user com classe request. 
 	// na tabela/classe request, exist um campo nom nome user, que é a relacao
 	// entre as tabelas USER e REQUEST
-	@OneToMany(mappedBy= "user")
-	private List<Request> request = new ArrayList<Request>();
+	@OneToMany(mappedBy= "owner")
+	private List<Request> requests = new ArrayList<Request>();
 	
 	
 	// um usuario pode ter varios pedidos
 	// relaciona chava estrangeira da classe user com classe requestStage
-	@OneToMany(mappedBy= "user")
+	@OneToMany(mappedBy= "owner")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
 
 		

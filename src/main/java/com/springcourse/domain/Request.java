@@ -61,14 +61,13 @@ public class Request implements Serializable{
 	
 	
 	@ManyToOne // notacao de varios pedidos para um usuario
-	@JoinColumn(name="user_id", nullable=false) // nome da chave estrangeira do usuario
-	private User user;
+	@JoinColumn(name="owner_id", nullable=false) // nome da chave estrangeira do usuario
+	private User owner;
 	
 	
-	@OneToMany(mappedBy="request")
+
+	@OneToMany(mappedBy = "request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
-	
-	
 	
 	
 	
