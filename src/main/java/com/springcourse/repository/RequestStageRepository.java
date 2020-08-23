@@ -14,11 +14,12 @@ import com.springcourse.domain.enums.RequestState;
 public interface RequestStageRepository extends JpaRepository<RequestStage, Long>{
 
     //metodo lista de estagio do pedido	
+	
 	public List<RequestStage> findAllByRequestId(Long id);
 	
-	// metodo, para query que deve pegar alteracao do estado do pedido
-	@Query("update Request set state=?2 where id=?1")
-	public Request updateStatus (Long id, RequestState state);
-	
+//	// metodo, para query que deve pegar alteracao do estado do pedido
+//	@Query("update Request set state=?2 where id=?1")
+//	public Request updateStatus (Long id, RequestState state);
+//	
 	
 }
