@@ -19,16 +19,14 @@ import com.springcourse.domain.enums.RequestState;
 public interface RequestRepository extends JpaRepository<Request, Long>{
 	
 	// o metodo EXTENDS JPA, contem os metodos save, find e etc...
-    //retorna lista de pedidos por id do usuario
-	
-	//public List<Request> findAllUserId(Long id);
-	
-	
- 
+    //retorna lista de pedidos por id do owner
 	public List<Request> findAllByOwnerId(Long id);
+
+	
 	// metodo, para query que deve pegar alteracao do estado do pedido
 	@Query("UPDATE request SET state = ?2 WHERE id = ?1")
 	public int updateStatus(Long id, RequestState state);
+	
 	
 	
 }

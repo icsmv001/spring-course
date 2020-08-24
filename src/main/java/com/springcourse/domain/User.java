@@ -26,6 +26,12 @@ import lombok.Setter;
 @Getter @Setter
 @Entity(name = "user")
 public class User implements Serializable{
+	public User(Object object, String string, String string2, String string3, Role administrator, Object object2,
+			Object object3) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * 
 	 */
@@ -64,6 +70,24 @@ public class User implements Serializable{
 	// relaciona chava estrangeira da classe user com classe requestStage
 	@OneToMany(mappedBy= "owner")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
+
+
+	public Object getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public IntPredicate getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public IntPredicate getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 		
 	

@@ -16,9 +16,5 @@ public interface RequestStageRepository extends JpaRepository<RequestStage, Long
 	
 	public List<RequestStage> findAllByRequestId(Long id);
 	
-//	// metodo, para query que deve pegar alteracao do estado do pedido
-//	@Query("update Request set state=?2 where id=?1")
-//	public Request updateStatus (Long id, RequestState state);
-//	
 	
 }
