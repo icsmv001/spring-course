@@ -74,11 +74,11 @@ public class RequestRepositoryTests {
 		List<Request> requests = requestRepository.findAllByOwnerId(37L);
 		assertThat(requests.size()).isEqualTo(1);
 	}
-//	
-//	@Test
-//	public void updateStatusTest() {
-//		int affectedRows = requestRepository.updateStatus(1L, RequestState.IN_PROGRESS);
-//		assertThat(affectedRows).isEqualTo(1);
-//	}
+	
+	@Test
+	public void updateStatusTest() {
+		int affectedRows = requestRepository.updateStatus(6L, RequestState.IN_PROGRESS);
+		assertThat(affectedRows).isEqualTo(1);
+	}
 
 }

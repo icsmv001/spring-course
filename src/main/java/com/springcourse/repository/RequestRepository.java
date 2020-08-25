@@ -23,6 +23,8 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
 	public List<Request> findAllByOwnerId(Long id);
 
 	
+	@Transactional(readOnly = false)
+	@Modifying
 	// metodo, para query que deve pegar alteracao do estado do pedido
 	@Query("UPDATE request SET state = ?2 WHERE id = ?1")
 	public int updateStatus(Long id, RequestState state);
