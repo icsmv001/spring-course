@@ -2,6 +2,7 @@ package com.springcourse.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.function.IntPredicate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,12 +27,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
+
 @Entity (name="request_stage")
 
 public class RequestStage implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -57,10 +57,11 @@ public class RequestStage implements Serializable {
 	@JoinColumn(name="request_id",  nullable = false)
     private Request request;
 	
-
     @ManyToOne
  	@JoinColumn(name="owner_id", nullable = false)
 	private User owner;
+
+
 	
 	
 }

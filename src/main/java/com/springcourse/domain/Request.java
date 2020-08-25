@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,9 +33,6 @@ import lombok.Setter;
 
 public class Request implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -68,7 +66,8 @@ public class Request implements Serializable{
 
 	@OneToMany(mappedBy = "request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
-	
+
+
 	
 	
 	
