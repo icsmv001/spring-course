@@ -46,7 +46,7 @@ public class Request implements Serializable{
 	private String description;
 	
 		
-	@Column(nullable = false)
+	@Column(name="creation_date",nullable = false, updatable = false)
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date creationDate;
 	
