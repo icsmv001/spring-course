@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -22,7 +21,7 @@ import com.springcourse.repository.UserRepository;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
 public class UserRepositoryTests {
-	// intanciando o UserRepository, para poder usar os metodos dele
+	// intanciando o UserRepository, para poder usar os metodos dele, por dependencia
 	@Autowired private UserRepository userRepository;
 	
 	
