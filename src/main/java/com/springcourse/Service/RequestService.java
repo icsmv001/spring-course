@@ -47,10 +47,6 @@ public class RequestService {
 	}
 	
 	
-	
-	
-	
-	
 	//list by owner  -- lista de pedidos por usuario
 	public List<Request> listAllByOwnerId (Long owneId) {
 		List<Request> requests = requestRepository.findAllByOwnerId(owneId);
