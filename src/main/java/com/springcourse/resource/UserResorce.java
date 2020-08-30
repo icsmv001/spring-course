@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springcourse.Service.RequestService;
 import com.springcourse.Service.UserService;
+import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
 
@@ -22,6 +24,9 @@ import com.springcourse.dto.UserLoginDto;
 public class UserResorce {
 	// intanciando o userservice para usar seus metodos.
 	@Autowired private UserService userService;
+	// instanca do requestService, para recupar lista de pedidos por id
+	@Autowired private RequestService requestService;
+	
 	
 	// metodo save
 	@PostMapping
@@ -65,6 +70,17 @@ public class UserResorce {
 		return ResponseEntity.ok(loggedUser);
 	}
 	
+	
+	// metodo para pegar um usuario e listar todo os seus pedidos.
+	// busca de pedidos por id do user
+	
+	@GetMapping("/{id}/requests")
+	public ResponseEntity<List<Request>> listAllRequestsById(@PathVariable(name="id") Long id) {
+		List<Request> requests = requestService.listAllByOwnerId(id);
+		return ResponseEntity.ok(requests);
+		
+				
+	}
 	
 	
 }
