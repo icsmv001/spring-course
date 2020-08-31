@@ -55,13 +55,14 @@ public class UserResorce {
 	}
 	
 	
-	// metodo list
-	@GetMapping("/{id}") 
+//	// metodo list
+	@GetMapping 
 	public ResponseEntity<List<User>> listAll()  {
 		List <User> users = userService.listAll();
 		return ResponseEntity.ok(users);
 	}
 		
+	
 	
 	// metodo login 
 	@PostMapping("/login")
