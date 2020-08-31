@@ -11,15 +11,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.springcourse.Service.RequestService;
 import com.springcourse.domain.Request;
+import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.enums.RequestState;
+import com.springcourse.Service.RequestService;
+import com.springcourse.Service.RequestStageService;
+
+
+
 
 @RestController
 @RequestMapping(value ="requests")
 public class RequestResource {
 	@Autowired private RequestService requestService;
+	@Autowired private RequestStageService stageService;
 	
 	@PostMapping
 	public ResponseEntity<Request> save (@RequestBody Request request ){
@@ -60,7 +65,15 @@ public class RequestResource {
 	// userrecourse.
 	
 	
+	//metodo para listar um pedido e pegar os seus estados
+	// seria htt://localhost:8080/requests/id/request-stages
+	@GetMapping("/{id}/request-stages")
+	public ResponseEntity<List<RequestStage>> listAllStagesById(@PathVariable (name ="id") Long id)  {
+		List<RequestStage> stages = stageService.listAllByRequestId(id);
+		return ResponseEntity.ok(stages);
+		
+	}
 	
-
+    
 
 }
