@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.springcourse.domain.Request;
 import com.springcourse.domain.enums.RequestState;
+import com.springcourse.exception.NotFoundException;
 import com.springcourse.repository.RequestRepository;
 
 @Service
@@ -36,7 +37,11 @@ public class RequestService {
 	// get
 	public Request getById (long id) {
 		Optional<Request> result = requestRepository.findById(id);
-		return result.get();
+		// return result.get(); substituida pela linha abaixo.
+		
+		return result.orElseThrow(()-> new NotFoundException("The are not request with id = " + id));
+    	// exception, caso não localize o item, retorna mensagem de erro por exception e codigo digito.
+    	
 	}
 	
 	

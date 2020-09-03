@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.springcourse.Service.util.HashUtil;
 import com.springcourse.domain.User;
+import com.springcourse.exception.NotFoundException;
 import com.springcourse.repository.UserRepository;
 
 @Service
@@ -40,7 +41,12 @@ public class UserService {
 	// metodo get  - filtrar por id
     public User getById (Long id) {
     	Optional<User> result =	 userRepository.findById(id); 
-		return result.get();
+		//return result.get();  -- substituido pela linha abaixo, com tratamento de exception.
+    	
+    	
+    	return result.orElseThrow(()-> new NotFoundException("The are not user with id = " + id));
+    	// exception, caso não localize o item, retorna mensagem de erro por exception e codigo digito.
+    	
 	  
     }
 	
