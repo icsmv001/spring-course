@@ -20,16 +20,18 @@ public class RequestStageService {
 	
 	//save
 	public RequestStage save (RequestStage stage) {
-		RequestStage createdStage = requestStageRepository.save(stage);
 		//data de inclusão de novo estado inicial sera a data corrente
 		stage.setRealizationDate(new Date());
+				
+		RequestStage createdStage = requestStageRepository.save(stage);
+		
 		// chamar metodo para atualizar estado do pedido, por isto foi instanciado o requestRepository tambem.
 		// atualizar estado do request
 		Long requestId = stage.getRequest().getId();
 		RequestState state = stage.getState();
+		
 		requestRepository.updateStatus(requestId, state);
-		
-		
+				
 		return createdStage;
 		
 		

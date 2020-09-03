@@ -43,10 +43,11 @@ public class RequestStage implements Serializable {
 	private String description;
 	
 	
-	@Column(name="realization_Date",nullable = false, updatable = false)
+	@Column(name="realization_date",nullable = false, updatable = false)
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date realizationDate;
 	
+	 
 	
 	// relacionamento com class Role (enums)
 	@Column(length=12, nullable = false)
