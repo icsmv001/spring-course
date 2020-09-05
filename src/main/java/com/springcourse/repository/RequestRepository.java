@@ -23,6 +23,10 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
 	public List<Request> findAllByOwnerId(Long id);
 
 	
+	//metodo para retornar uma pagina
+	public Page<Request> findAllByOwnerId(Long id, Pageable pageable);
+		
+		
 	@Transactional(readOnly = false)
 	@Modifying
 	// metodo, para query que deve pegar alteracao do estado do pedido

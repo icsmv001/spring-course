@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springcourse.Service.util.HashUtil;
 import com.springcourse.domain.User;
 import com.springcourse.exception.NotFoundException;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 import com.springcourse.repository.UserRepository;
 
 @Service
@@ -55,7 +60,24 @@ public class UserService {
 		List<User> users = userRepository.findAll();
         return users;
     }
-       
+    
+    //metodo para carregar lista sob demanda
+    public PageModel<User> listAllOnLazyModel(PageRequestModel pr) {
+    	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+    	Page<User> page =userRepository.findAll(pageable);
+    	
+    	PageModel<User> pm = new PageModel<User>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+    	return pm;
+    	
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
     // metodo login
 	public User login(String email, String password) {
 		password = HashUtil.getSecureHash(password);

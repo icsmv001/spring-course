@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springcourse.Service.RequestService;
@@ -18,6 +19,8 @@ import com.springcourse.Service.UserService;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 
 @RestController
 @RequestMapping(value = "users")
@@ -55,13 +58,28 @@ public class UserResorce {
 	}
 	
 	
-//	// metodo list
+	// metodo list sem paginacao 
 	@GetMapping 
 	public ResponseEntity<List<User>> listAll()  {
 		List <User> users = userService.listAll();
 		return ResponseEntity.ok(users);
 	}
 		
+	
+	// metodo list com  paginacao 
+	@RequestMapping(value = "/pages")
+	public ResponseEntity<PageModel<User>> listAll(
+		// parametros de entrada da requisicao
+		@RequestParam(value = "page") int page,
+		@RequestParam(value = "size") int size)  {
+		
+		PageRequestModel pr = new PageRequestModel(page, size);
+		PageModel<User> pm = userService.listAllOnLazyModel(pr);
+	    return ResponseEntity.ok(pm);		
+	}
+		
+	
+	
 	
 	
 	// metodo login 
@@ -74,14 +92,32 @@ public class UserResorce {
 	
 	// metodo para pegar um usuario e listar todo os seus pedidos.
 	// busca de pedidos por id do user
-	
+	// metodo sem paginação
 	@GetMapping("/{id}/requests")
 	public ResponseEntity<List<Request>> listAllRequestsById(@PathVariable(name="id") Long id) {
 		List<Request> requests = requestService.listAllByOwnerId(id);
 		return ResponseEntity.ok(requests);
-		
-				
 	}
+	
+	
+	// metodo para pegar um usuario e listar todo os seus pedidos.
+	// metodo com paginação
+	@GetMapping("/{id}/requestsPages")
+	public ResponseEntity<PageModel<Request>> listAllRequestsById(
+		@PathVariable(name="id") Long id,
+	    @RequestParam(value = "size") int size,
+	    @RequestParam(value = "page") int page) {
+		
+		PageRequestModel pr = new PageRequestModel(page, size);
+		PageModel<Request> pm = requestService.listAllByOwnerIdOnLazyModel(id, pr);
+        return ResponseEntity.ok(pm);
+		
+
+	}
+		
+	
+	
+		
 	
 	
 }
