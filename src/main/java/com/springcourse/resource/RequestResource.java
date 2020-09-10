@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.enums.RequestState;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 import com.springcourse.Service.RequestService;
 import com.springcourse.Service.RequestStageService;
 
@@ -49,14 +52,27 @@ public class RequestResource {
 		return ResponseEntity.ok(request);
 	}
 	
-	//metodos - list all
-	@GetMapping
-	public ResponseEntity<List<Request>> ListALL(){
-		List<Request> requests = requestService.listAll();
-		return ResponseEntity.ok(requests);
+//	//metodos - list all
+//	@GetMapping
+//	public ResponseEntity<List<Request>> ListALL(){
+//		List<Request> requests = requestService.listAll();
+//		return ResponseEntity.ok(requests);
+//		
+//	}
 		
-	}
+	// metodo para pegar todo os  pedidos.
+	// metodo com paginação
+	@GetMapping
+	public ResponseEntity<PageModel<Request>> listAll(
+	    @RequestParam(value = "size") int size,
+		@RequestParam(value = "page") int page) {
 			
+		PageRequestModel pr = new PageRequestModel(page, size);
+		PageModel<Request> pm = requestService.listAllOnLazyModel(pr);
+	    return ResponseEntity.ok(pm);
+	}
+	
+	
 	// metodos - List all by owner id
 	// http://localhos:8080/users/requests
 	// aqui seria um metodo, para pegar o id do usuario e listar todos os pedidos dele.
@@ -67,13 +83,34 @@ public class RequestResource {
 	
 	//metodo para listar um pedido e pegar os seus estados
 	// seria htt://localhost:8080/requests/id/request-stages
+	// sem paginacao
 	@GetMapping("/{id}/request-stages")
-	public ResponseEntity<List<RequestStage>> listAllStagesById(@PathVariable (name ="id") Long id)  {
+	public ResponseEntity<List<RequestStage>> listAllStagesById(
+			@PathVariable (name ="id") Long id)  {
 		List<RequestStage> stages = stageService.listAllByRequestId(id);
 		return ResponseEntity.ok(stages);
 		
 	}
 	
     
+	//metodo para listar um pedido e pegar os seus estados
+    // COM  paginacao  
+	@GetMapping("/{id}/request-stages-pages")
+	public ResponseEntity<PageModel<RequestStage>> listAllStagesById(
+		@PathVariable (name ="id") Long id,
+		// parametros de entrada da requisicao
+		@RequestParam(value = "page") int page,
+		@RequestParam(value = "size") int size)  {
+			 
+        PageRequestModel pr = new PageRequestModel(page,size);
+		
+		PageModel<RequestStage> pm = stageService.listAllByRequestIdOnLazyModel(id, pr);
+		return ResponseEntity.ok(pm);
+			
+		}
+		
+	
+	
+	
 
 }

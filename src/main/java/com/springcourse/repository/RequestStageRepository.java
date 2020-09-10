@@ -14,8 +14,10 @@ import com.springcourse.domain.RequestStage;
 public interface RequestStageRepository extends JpaRepository<RequestStage, Long>{
 
     //metodo lista de estagio do pedido	
-	
 	public List<RequestStage> findAllByRequestId(Long id);
 	
+	
+	//metodo lista de estagio do pedido, por paginacao	
+	public Page<RequestStage> findAllByRequestId(Long id, Pageable pageable);
 	
 }

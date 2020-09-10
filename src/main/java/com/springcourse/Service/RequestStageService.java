@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.enums.RequestState;
 import com.springcourse.exception.NotFoundException;
+import com.springcourse.model.PageModel;
+import com.springcourse.model.PageRequestModel;
 import com.springcourse.repository.RequestRepository;
 import com.springcourse.repository.RequestStageRepository;
 
@@ -59,6 +65,22 @@ public class RequestStageService {
 		   List<RequestStage> stages = requestStageRepository.findAllByRequestId(requestId);
 		return stages;
 	}
+	
+	
+	// metodo para carregar lista sob demanda de paginacao passando o id do usuario
+		public PageModel<RequestStage> listAllByRequestIdOnLazyModel(Long requestId, PageRequestModel pr) {
+			
+	    	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+	    	
+	    	Page<RequestStage> page = requestStageRepository.findAllByRequestId(requestId, pageable);
+	            	
+	    	PageModel<RequestStage> pm = new PageModel<RequestStage>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+	    	return pm;
+	    	
+	    	
+	    }
+	    
+	
 	
 	
 	

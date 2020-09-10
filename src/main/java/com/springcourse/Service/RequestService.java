@@ -64,7 +64,7 @@ public class RequestService {
 		return requests;
 	}
 		
-	// metodo para carregar lista sob demanda de paginacao
+	// metodo para carregar lista sob demanda de paginacao passando o id do usuario
 	public PageModel<Request> listAllByOwnerIdOnLazyModel(Long ownerId, PageRequestModel pr) {
 		
     	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
@@ -77,7 +77,19 @@ public class RequestService {
     	
     }
     
-	
+	// metodo para carregar lista sob demanda de paginacao passando o id do usuario
+	public PageModel<Request> listAllOnLazyModel(PageRequestModel pr) {
+		
+    	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+    	
+    	Page<Request> page = requestRepository.findAll(pageable);
+            	
+    	PageModel<Request> pm = new PageModel<Request>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
+    	return pm;
+    	
+    	
+    }
+    
 	
 	
 	
