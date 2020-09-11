@@ -70,8 +70,8 @@ public class UserResorce {
 	@RequestMapping(value = "/pages")
 	public ResponseEntity<PageModel<User>> listAll(
 		// parametros de entrada da requisicao
-		@RequestParam(value = "page") int page,
-		@RequestParam(value = "size") int size)  {
+		@RequestParam(value = "page", defaultValue ="0" ) int page,
+		@RequestParam(value = "size", defaultValue ="10") int size)  {
 		
 		PageRequestModel pr = new PageRequestModel(page, size);
 		PageModel<User> pm = userService.listAllOnLazyModel(pr);
@@ -105,8 +105,9 @@ public class UserResorce {
 	@GetMapping("/{id}/requestsPages")
 	public ResponseEntity<PageModel<Request>> listAllRequestsById(
 		@PathVariable(name="id") Long id,
-	    @RequestParam(value = "size") int size,
-	    @RequestParam(value = "page") int page) {
+		// parametros de entrada da requisicao
+		@RequestParam(value = "page", defaultValue ="0" ) int page,
+		@RequestParam(value = "size", defaultValue ="10") int size)  {
 		
 		PageRequestModel pr = new PageRequestModel(page, size);
 		PageModel<Request> pm = requestService.listAllByOwnerIdOnLazyModel(id, pr);
