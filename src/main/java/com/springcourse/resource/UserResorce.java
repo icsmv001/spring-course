@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,7 @@ import com.springcourse.Service.UserService;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 
@@ -116,7 +118,17 @@ public class UserResorce {
 
 	}
 		
-	
+	//montar metodo para atualizar ROLE, chamando o metodo update da classe user service
+	@PatchMapping("/role/{id}")
+	public ResponseEntity<?> updateRole(@PathVariable(name="id") Long id, @RequestBody UserUpdateRoleDto userdto) {
+		User user = new User();
+		user.setId(id);
+		user.setRole(userdto.getRole());
+		
+		userService.updateRole(user);
+		
+	    return ResponseEntity.ok().build();
+	}
 	
 		
 	

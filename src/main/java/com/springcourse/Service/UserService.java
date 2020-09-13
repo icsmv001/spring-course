@@ -72,12 +72,7 @@ public class UserService {
     	
     }
     
-    
-    
-    
-    
-    
-    
+     
     // metodo login
 	public User login(String email, String password) {
 		password = HashUtil.getSecureHash(password);
@@ -85,8 +80,12 @@ public class UserService {
 		Optional<User> result = userRepository.login(email,password);
 		return result.get();
 	}
-	
-	
-	
+
+
+	//Metodo para atualizar o ROLE, com base no modelo usado no Test
+    public int updateRole(User user) {
+	    return  userRepository.updateRole(user.getId(), user.getRole());
+	}
+			
 	
 }
