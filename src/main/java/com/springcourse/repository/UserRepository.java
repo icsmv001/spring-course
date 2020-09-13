@@ -16,7 +16,15 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query("SELECT u FROM user u WHERE email = ?1 AND password =?2")
 	public Optional <User> login(String email, String password);
-
+	
+	// metodo para atualizar ROLE
+	@Transactional(readOnly = false)  // não sera apenas para leitura
+	@Modifying
+	@Query("UPDATE user SET role = ?2 where id = ?1")
+	public int updateRole(Long id, Role role) ;
+	
+		
+	
 	
 }
 
