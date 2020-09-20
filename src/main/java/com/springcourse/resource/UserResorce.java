@@ -2,6 +2,8 @@ package com.springcourse.resource;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,10 +88,11 @@ public class UserResorce {
 	
 	// metodo login 
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody UserLoginDto user){
+	public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
 		User loggedUser = userService.login(user.getEmail(),user.getPassword());
 		return ResponseEntity.ok(loggedUser);
 	}
+	
 	
 	
 	// metodo para pegar um usuario e listar todo os seus pedidos.
@@ -131,6 +134,5 @@ public class UserResorce {
 	}
 	
 		
-	
-	
+		
 }

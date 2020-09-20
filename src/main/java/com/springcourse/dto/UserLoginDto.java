@@ -1,10 +1,11 @@
 package com.springcourse.dto;
 
-import java.util.List;
 
-import com.springcourse.domain.Request;
-import com.springcourse.domain.RequestStage;
-import com.springcourse.domain.enums.Role;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +16,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 public class UserLoginDto {
+				
+	// validacao
+	@Email (message = "EMAIL INVALIDO")
 	private String email;
+	
+	
+	// validacao
+	@NotBlank(message = "PASSWORD NOT IS BLANK !!")
 	private String password;
+	
 	
 	
 }

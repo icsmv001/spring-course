@@ -62,12 +62,20 @@ public class UserRepositoryTests {
 //	    }
 //	 
 	
-   	@Test
-    public void updateRoleTest() { 
-    	int affectedRows = userRepository.updateRole(145L, Role.ADMINISTRATOR);
-        assertThat(affectedRows).isEqualTo(1); }
-	  
-	  
+//   	@Test
+//    public void updateRoleTest() { 
+//    	int affectedRows = userRepository.updateRole(145L, Role.ADMINISTRATOR);
+//        assertThat(affectedRows).isEqualTo(1); }
+//	  
+	  	
+	@Test
+	public void loginTest() { 
+		Optional<User> result = userRepository.login("izael@gmail.com", "123"); 
+		User loggedUser =  result.get();
+	    assertThat(loggedUser.getId()).isEqualTo(37L); 
+	    }
+	
+	
 	
 	 
 }
