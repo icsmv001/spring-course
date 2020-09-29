@@ -15,6 +15,11 @@ import com.springcourse.exception.NotFoundException;
 
 @ControllerAdvice
 // notação especial, que houve se ocorre erro e avisa, ou seja envia notificação
+// para criar mensagem customizadas, extender  a class ResourceExceptionHandler,
+// para que possa ser acessada por outras classes no sistema
+// a partir dai, podesse ir nos metodos que tratam dos objetos e fazer tratamento
+// para retornar nos erros por exception, mensagens amigaveis.
+
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(NotFoundException.class)
@@ -36,6 +41,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError error = new ApiError(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date());
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		
 		
 		    
 	}

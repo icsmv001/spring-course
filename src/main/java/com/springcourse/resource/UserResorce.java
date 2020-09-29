@@ -25,7 +25,6 @@ import com.springcourse.dto.UserLoginDto;
 import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
-
 @RestController
 @RequestMapping(value = "users")
 public class UserResorce {
@@ -89,9 +88,28 @@ public class UserResorce {
 	// metodo login 
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
+		
+	    // System.out.println("ate aqui ok...");
+		
 		User loggedUser = userService.login(user.getEmail(),user.getPassword());
+		
+		
 		return ResponseEntity.ok(loggedUser);
 	}
+	
+	
+	// metodo login 
+	@PostMapping("/logins")
+	public ResponseEntity<User> logins(@RequestBody @Valid UserLoginDto user){
+		
+	    // System.out.println("ate aqui ok...");
+		
+		User loggedUser = userService.login(user.getEmail(),user.getPassword());
+		
+		
+		return ResponseEntity.ok(loggedUser);
+	}
+	
 	
 	
 	
@@ -123,7 +141,7 @@ public class UserResorce {
 		
 	//montar metodo para atualizar ROLE, chamando o metodo update da classe user service
 	@PatchMapping("/role/{id}")
-	public ResponseEntity<?> updateRole(@PathVariable(name="id") Long id, @RequestBody UserUpdateRoleDto userdto) {
+	public ResponseEntity<?> updateRole(@PathVariable(name="id") Long id,  @RequestBody @Valid UserUpdateRoleDto userdto) {
 		User user = new User();
 		user.setId(id);
 		user.setRole(userdto.getRole());
