@@ -291,7 +291,7 @@ INSERT INTO spring_course_db2.request (creation_date,description,state,subject,o
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','599');
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','600');
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','601');
-INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','369;
+INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','369');
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','370');
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','371');
 INSERT INTO spring_course_db2.request (creation_date,description,state,subject,owner_id)VALUES('2020-09-02 02:15:04.975000','tv smart','OPEN','TESTE DE BASE REQUEST2','372');
