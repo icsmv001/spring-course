@@ -52,7 +52,7 @@ public class User implements Serializable{
 	
 	
 	// relacionamento com class Role (enums)
-	@Column(length=20, nullable = false)
+	@Column(length=20, nullable = false, updatable = false)
 	@Enumerated(EnumType.STRING)  // notacao para linkar atributo com class enum respectiva
 	private Role role;
 	
