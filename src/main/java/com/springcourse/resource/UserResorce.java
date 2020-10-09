@@ -149,7 +149,9 @@ public class UserResorce {
 		userService.updateRole(user);
 		
 	    return ResponseEntity.ok().build();
+	    
 	}
+	
 	
 		
 		
