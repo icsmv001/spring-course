@@ -22,7 +22,9 @@ import com.springcourse.Service.UserService;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.dto.UserSavedto;
 import com.springcourse.dto.UserUpdateRoleDto;
+import com.springcourse.dto.UserUpdatedto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 @RestController
@@ -34,17 +36,40 @@ public class UserResorce {
 	@Autowired private RequestService requestService;
 	
 	
-	// metodo save
+//	// metodo save sem tratamento de validacao de entrada
+//	@PostMapping
+//	public ResponseEntity<User> save(@RequestBody  User user){
+//		User createdUser = userService.save(user);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+//	}
+	
+	
+	// metodo save com tratamento de validacao de entrada
 	@PostMapping
-	public ResponseEntity<User> save(@RequestBody User user){
-		User createdUser = userService.save(user);
+	public ResponseEntity<User> save(@RequestBody  @Valid UserSavedto userdto){
+		User userToSave = userdto.transformToUser();
+		User createdUser = userService.save(userToSave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 	}
 	
 	
-	// metodo update
+	
+//	// metodo update sem tratamento de validacao de entrada
+//		@PutMapping("/{id}")
+//		public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody User user){
+//			user.setId(id);
+//			User updateUser = userService.save(user);
+//			return ResponseEntity.ok(updateUser);
+//			
+//		}
+//	
+	
+	
+	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody User user){
+	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdatedto userdto){
+		User user = userdto.transformToUser();
+		
 		user.setId(id);
 		User updateUser = userService.save(user);
 		return ResponseEntity.ok(updateUser);
