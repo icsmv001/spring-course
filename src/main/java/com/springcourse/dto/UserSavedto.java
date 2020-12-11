@@ -26,11 +26,11 @@ public class UserSavedto {
 	@Email(message = "Invalido endereço de email")
 	private String email;
 	
-	@Size(min=7,max=99, message = "Password must be between 7 and 99")
+	@Size(min=3,max=99, message = "Password must be between 3 and 99")
 	private String password;
 	
 	@NotNull(message="Role required")
-	private Role   role;
+ 	private Role   role;
 	
 	private List<Request> requests = new ArrayList<Request>();
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
