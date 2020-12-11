@@ -48,6 +48,7 @@ public class UserResorce {
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody  @Valid UserSavedto userdto){
 		User userToSave = userdto.transformToUser();
+		
 		User createdUser = userService.save(userToSave);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 	}
