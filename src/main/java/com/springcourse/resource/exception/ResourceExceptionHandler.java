@@ -1,6 +1,8 @@
 package com.springcourse.resource.exception;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,15 +37,27 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
+		// comando que pega o primeiro erro para listar no retorno
+		// String defaultMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 		
-		String defaultMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+		// codigo abaixo gera lista com erros de validacao de entrada
+		List<String> errors = new ArrayList<String>();
+        ex.getBindingResult().getAllErrors().forEach(error ->{
 		
-		ApiError error = new ApiError(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date());
+        	 errors.add(error.getDefaultMessage());
+        	
+		 });
 		
+		
+		//ApiError error = new ApiError(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date());
+		
+        String defaultMessage = "Invalid Field(s)";
+        ApiErrorList error = new ApiErrorList(HttpStatus.BAD_REQUEST.value(), defaultMessage, new Date(),errors);
+        
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 		
 		
-		
+				
 		    
 	}
 	
