@@ -23,7 +23,7 @@ public class UserUpdatedto {
 	@Email (message = "Invalido endereço de email")
 	private String email;
 	
-	@Size(min=3,max=9, message = "Password must be between 3 and 99")
+	@Size(min=3,max=99, message = "Password must be between 3 and 99")
 	private String password;
 	
 
