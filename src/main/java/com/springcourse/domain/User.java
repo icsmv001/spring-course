@@ -1,5 +1,6 @@
 package com.springcourse.domain;
-
+//pasta de projeto
+//D:\cursos\curso_spring_REST_iniciantes\DESENV\spring-course\target\classes\com\springcourse\
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import lombok.Getter;
 @Entity(name = "user")
 public class User implements Serializable{
 	/**
-	 * 
+	 *  teste
 	 */	
 	private static final long serialVersionUID = 1L;
 	@Id
