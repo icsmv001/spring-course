@@ -1,6 +1,7 @@
 package com.springcourse.resource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +34,7 @@ import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.dto.UserUpdatedto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
+import com.springcourse.security.JwtManager;
 @RestController
 @RequestMapping(value = "users")
 public class UserResorce {
@@ -40,6 +43,8 @@ public class UserResorce {
 	// instanca do requestService, para recupar lista de pedidos por id
 	@Autowired private RequestService requestService;
 	@Autowired private AuthenticationManager authManager;
+	@Autowired private JwtManager jwtManager;
+	
 	
 	
 	
@@ -120,9 +125,14 @@ public class UserResorce {
 	
 	// metodo login 
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
+	
+	// metodo sem usar token
+	//public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
 		
-	    // System.out.println("ate aqui ok...");
+	// metodo usando token
+	public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto user){
+				
+		// System.out.println("ate aqui ok...");
 		// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
 		// User loggedUser = userService.login(user.getEmail(),user.getPassword());
 		// return ResponseEntity.ok(loggedUser);
@@ -134,21 +144,29 @@ public class UserResorce {
 		
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
-		return ResponseEntity.ok(null);
-	}
-	
-	
-	// metodo login 
-	@PostMapping("/logins")
-	public ResponseEntity<User> logins(@RequestBody @Valid UserLoginDto user){
+		//BUSCANDO O USUARIO PARA MONTAR A CHAMADA DO TOKEN, por retornar um objeto apos o igual foi convertido com CAST
+		org.springframework.security.core.userdetails.User userSprint = 
+				(org.springframework.security.core.userdetails.User) auth.getPrincipal();
 		
+		// implementando os parametros 
+		String email = userSprint.getUsername();
+		List<String> roles = userSprint.getAuthorities()
+				.stream()
+				.map(authority -> authority.getAuthority())
+				.collect(Collectors.toList());
+		
+		String jwt = jwtManager.createToken(email, roles);
+		
+		return ResponseEntity.ok(jwt);
+	}
+		
+	// metodo logins -- sem uso de token --teste ok 
+	//@PostMapping("/logins")
+	//public ResponseEntity<User> logins(@RequestBody @Valid UserLoginDto user){
 	    // System.out.println("ate aqui ok...");
-		
-		User loggedUser = userService.login(user.getEmail(),user.getPassword());
-		
-		
-		return ResponseEntity.ok(loggedUser);
-	}
+	//	User loggedUser = userService.login(user.getEmail(),user.getPassword());
+	//	return ResponseEntity.ok(loggedUser);
+	//}
 	
 	
 	
