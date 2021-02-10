@@ -7,6 +7,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +39,8 @@ public class UserResorce {
 	@Autowired private UserService userService;
 	// instanca do requestService, para recupar lista de pedidos por id
 	@Autowired private RequestService requestService;
+	@Autowired private AuthenticationManager authManager;
+	
 	
 	
 //	// metodo save sem tratamento de validacao de entrada
@@ -116,11 +123,18 @@ public class UserResorce {
 	public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
 		
 	    // System.out.println("ate aqui ok...");
+		// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
+		// User loggedUser = userService.login(user.getEmail(),user.getPassword());
+		// return ResponseEntity.ok(loggedUser);
 		
-		User loggedUser = userService.login(user.getEmail(),user.getPassword());
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+	
+		// chamada de metodo authenticate
+		Authentication auth = authManager.authenticate(token);
 		
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		
-		return ResponseEntity.ok(loggedUser);
+		return ResponseEntity.ok(null);
 	}
 	
 	
