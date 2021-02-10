@@ -29,6 +29,7 @@ import com.springcourse.Service.UserService;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
+import com.springcourse.dto.UserLoginResponsedto;
 import com.springcourse.dto.UserSavedto;
 import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.dto.UserUpdatedto;
@@ -130,7 +131,7 @@ public class UserResorce {
 	//public ResponseEntity<User> login(@RequestBody @Valid UserLoginDto user){
 		
 	// metodo usando token
-	public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto user){
+	public ResponseEntity<UserLoginResponsedto> login(@RequestBody @Valid UserLoginDto user){
 				
 		// System.out.println("ate aqui ok...");
 		// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
@@ -155,9 +156,10 @@ public class UserResorce {
 				.map(authority -> authority.getAuthority())
 				.collect(Collectors.toList());
 		
-		String jwt = jwtManager.createToken(email, roles);
 		
-		return ResponseEntity.ok(jwt);
+		
+		
+		return ResponseEntity.ok(jwtManager.createToken(email, roles));
 	}
 		
 	// metodo logins -- sem uso de token --teste ok 
@@ -169,7 +171,7 @@ public class UserResorce {
 	//}
 	
 	// metodo usando token
-		public ResponseEntity<String> logins(@RequestBody @Valid UserLoginDto user){
+		public ResponseEntity<UserLoginResponsedto> logins(@RequestBody @Valid UserLoginDto user){
 					
 			// System.out.println("ate aqui ok...");
 			// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
@@ -194,9 +196,9 @@ public class UserResorce {
 					.map(authority -> authority.getAuthority())
 					.collect(Collectors.toList());
 			
-			String jwt = jwtManager.createToken(email, roles);
+		 
 			
-			return ResponseEntity.ok(jwt);
+			return ResponseEntity.ok(jwtManager.createToken(email, roles));
 		}
 		
 	
