@@ -24,7 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	public int updateRole(Long id, Role role) ;
 	
 		
-	
+	// metodo que busca os dados do usuario
+	public Optional<User> findByEmail (String email); 
 	
 }
 
