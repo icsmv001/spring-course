@@ -1,5 +1,6 @@
 package com.springcourse.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.springcourse.Service.util.HashUtil;
@@ -18,7 +24,7 @@ import com.springcourse.repository.UserRepository;
 
 @Service
 // esta camada de servico, tem a resposavilidade de chamar os metodos do userRepository
-public class UserService {
+public class UserService implements UserDetailsService {
     // instanciar o UserRepository, para ter acesso a seus metodos
 	@Autowired private UserRepository userRepository;
 	
@@ -103,6 +109,25 @@ public class UserService {
 	//Metodo para atualizar o ROLE, com base no modelo usado no Test
     public int updateRole(User user) {
 	    return  userRepository.updateRole(user.getId(), user.getRole());
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// neste metodo o username, recebe o parametro do email do usuario para validar acesso via jwt
+		
+        Optional<User> result = userRepository.findByEmail(username);
+        // teste se usuario existe ou nao
+        if(!result.isPresent()) throw new UsernameNotFoundException("Dosen't exist user with email = " + username);
+        User user = result.get();
+     
+        List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLSE_" +  user.getRole().name()));
+        
+        // montando user do sprint security
+        org.springframework.security.core.userdetails.User UserSpring = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+               
+		
+		return UserSpring;
+		
 	}
 			
 	
