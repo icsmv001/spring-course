@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
@@ -36,6 +37,7 @@ import com.springcourse.dto.UserUpdateRoleDto;
 import com.springcourse.dto.UserUpdatedto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
+import com.springcourse.security.AccessManager;
 import com.springcourse.security.JwtManager;
 @RestController
 @RequestMapping(value = "users")
@@ -46,6 +48,8 @@ public class UserResorce {
 	@Autowired private RequestService requestService;
 	@Autowired private AuthenticationManager authManager;
 	@Autowired private JwtManager jwtManager;
+	@Autowired private AccessManager accessManager;
+	
 	
 	
 	
@@ -82,6 +86,8 @@ public class UserResorce {
 //		}
 //	
 	
+	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
+	@PreAuthorize("@accessManager.isOwner(#id)")
 	
 	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
