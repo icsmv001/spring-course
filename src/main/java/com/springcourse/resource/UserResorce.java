@@ -57,8 +57,7 @@ public class UserResorce {
 //		User createdUser = userService.save(user);
 //		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 //	}
-	
-	
+		
 	// ESTA NOTACAO FAZ COM QUE SOMENTE O ADMINISTRADOR POSSA USAR O METODO RESPONSEENTY<USER>,
 	// atendendo ao item 1, de requisitos funcionais; adm pode registrar novo registro.
 	@Secured({"ROLE_ADMINISTRATOR"})
