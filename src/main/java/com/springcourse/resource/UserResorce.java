@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
@@ -47,6 +48,9 @@ public class UserResorce {
 	@Autowired private JwtManager jwtManager;
 	
 	
+
+	
+	
 	
 	
 //	// metodo save sem tratamento de validacao de entrada
@@ -57,6 +61,9 @@ public class UserResorce {
 //	}
 	
 	
+	// ESTA NOTACAO FAZ COM QUE SOMENTE O ADMINISTRADOR POSSA USAR O METODO RESPONSEENTY<USER>,
+	// atendendo ao item 1, de requisitos funcionais; adm pode registrar novo registro.
+	@Secured({"ROLE_ADMINISTRATOR"})
 	// metodo save com tratamento de validacao de entrada
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody  @Valid UserSavedto userdto){
@@ -230,6 +237,11 @@ public class UserResorce {
 
 	}
 		
+	
+	
+	@Secured({"ROLE_ADMINISTRATOR"})
+	// notacao que permite que somente o ADM, possa realizar alteracao no role, atendendo ao item 7 do documento de requisitos
+	// funcionais do usuario
 	//montar metodo para atualizar ROLE, chamando o metodo update da classe user service
 	@PatchMapping("/role/{id}")
 	public ResponseEntity<?> updateRole(@PathVariable(name="id") Long id,  @RequestBody @Valid UserUpdateRoleDto userdto) {
