@@ -48,8 +48,6 @@ public class UserResorce {
 	@Autowired private JwtManager jwtManager;
 	
 	
-
-	
 	
 	
 	
@@ -237,8 +235,7 @@ public class UserResorce {
 
 	}
 		
-	
-	
+		
 	@Secured({"ROLE_ADMINISTRATOR"})
 	// notacao que permite que somente o ADM, possa realizar alteracao no role, atendendo ao item 7 do documento de requisitos
 	// funcionais do usuario
