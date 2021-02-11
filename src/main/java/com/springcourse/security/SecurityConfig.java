@@ -20,7 +20,6 @@ import com.springcourse.Service.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired 
