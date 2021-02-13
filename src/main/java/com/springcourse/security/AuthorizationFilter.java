@@ -48,10 +48,12 @@ public class AuthorizationFilter  extends OncePerRequestFilter {
 			
 			writer.write(apiErrorString); 
 			
-			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+			response.setContentType( MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			return;
 		}
+		
+		// se passou ate aqui, token validado com sucesso.
 		
 		jwt = jwt.replace(SecurityConstants.JWT_PROVIDER, "");
 		try {
@@ -60,6 +62,8 @@ public class AuthorizationFilter  extends OncePerRequestFilter {
 			List<String> roles = (List<String>) claims.get(SecurityConstants.JWT_ROLE_KEY);
 			
 			List<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
+			
+			
 			
 			roles.forEach(role -> {
 				grantedAuthority.add(new SimpleGrantedAuthority(role));
