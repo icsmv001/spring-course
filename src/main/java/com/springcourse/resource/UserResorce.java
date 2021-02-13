@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -180,48 +179,48 @@ public class UserResorce {
 		return ResponseEntity.ok(jwtManager.createToken(email, roles));
 	}
 		
-	// metodo logins -- sem uso de token --teste ok 
-	@PostMapping("/logins")
-	//public ResponseEntity<User> logins(@RequestBody @Valid UserLoginDto user){
-	  //   System.out.println("ate aqui ok...");
-		//User loggedUser = userService.login(user.getEmail(),user.getPassword());
-		//return ResponseEntity.ok(loggedUser);
-	//}
-	
-	// metodo usando token
-		public ResponseEntity<UserLoginResponsedto> logins(@RequestBody @Valid UserLoginDto user){
-					
-			// System.out.println("ate aqui ok...");
-			// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
-			// User loggedUser = userService.login(user.getEmail(),user.getPassword());
-			// return ResponseEntity.ok(loggedUser);
-
-		
-		
-		
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-		
-			// chamada de metodo authenticate
-			Authentication auth = authManager.authenticate(token);
-			
-			SecurityContextHolder.getContext().setAuthentication(auth);
-			
-			//BUSCANDO O USUARIO PARA MONTAR A CHAMADA DO TOKEN, por retornar um objeto apos o igual foi convertido com CAST
-			org.springframework.security.core.userdetails.User userSprint = 
-					(org.springframework.security.core.userdetails.User) auth.getPrincipal();
-			
-			// implementando os parametros 
-			String email = userSprint.getUsername();
-			List<String> roles = userSprint.getAuthorities()
-					.stream()
-					.map(authority -> authority.getAuthority())
-					.collect(Collectors.toList());
-			
-		 
-			
-			return ResponseEntity.ok(jwtManager.createToken(email, roles));
-		}
-		
+//	// metodo logins -- sem uso de token --teste ok 
+//	@PostMapping("/logins")
+//	//public ResponseEntity<User> logins(@RequestBody @Valid UserLoginDto user){
+//	  //   System.out.println("ate aqui ok...");
+//		//User loggedUser = userService.login(user.getEmail(),user.getPassword());
+//		//return ResponseEntity.ok(loggedUser);
+//	//}
+//	
+//	// metodo usando token
+//		public ResponseEntity<UserLoginResponsedto> logins(@RequestBody @Valid UserLoginDto user){
+//					
+//			// System.out.println("ate aqui ok...");
+//			// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
+//			// User loggedUser = userService.login(user.getEmail(),user.getPassword());
+//			// return ResponseEntity.ok(loggedUser);
+//
+//		
+//		
+//		
+//			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+//		
+//			// chamada de metodo authenticate
+//			Authentication auth = authManager.authenticate(token);
+//			
+//			SecurityContextHolder.getContext().setAuthentication(auth);
+//			
+//			//BUSCANDO O USUARIO PARA MONTAR A CHAMADA DO TOKEN, por retornar um objeto apos o igual foi convertido com CAST
+//			org.springframework.security.core.userdetails.User userSprint = 
+//					(org.springframework.security.core.userdetails.User) auth.getPrincipal();
+//			
+//			// implementando os parametros 
+//			String email = userSprint.getUsername();
+//			List<String> roles = userSprint.getAuthorities()
+//					.stream()
+//					.map(authority -> authority.getAuthority())
+//					.collect(Collectors.toList());
+//			
+//		 
+//			
+//			return ResponseEntity.ok(jwtManager.createToken(email, roles));
+//		}
+//		
 	
 	
 	
