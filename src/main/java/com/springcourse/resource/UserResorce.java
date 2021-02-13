@@ -12,10 +12,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.jaas.AuthorityGranter;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,10 +50,7 @@ public class UserResorce {
 	@Autowired private AccessManager accessManager;
 	
 	
-	
-	
-	
-	
+
 //	// metodo save sem tratamento de validacao de entrada
 //	@PostMapping
 //	public ResponseEntity<User> save(@RequestBody  User user){
@@ -68,6 +64,9 @@ public class UserResorce {
 	// metodo save com tratamento de validacao de entrada
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody  @Valid UserSavedto userdto){
+		
+	
+		
 		User userToSave = userdto.transformToUser();
 		
 		User createdUser = userService.save(userToSave);
@@ -88,14 +87,23 @@ public class UserResorce {
 	
 	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
 	@PreAuthorize("@accessManager.isOwner(#id)")
+	 
 	
+
 	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
 	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdatedto userdto){
+	
+		
+		
+	
+			
+		
 		User user = userdto.transformToUser();
 		
 		user.setId(id);
 		User updateUser = userService.save(user);
+		System.out.println("UserResorce ate aqui ok5...");
 		return ResponseEntity.ok(updateUser);
 		
 	}
@@ -187,7 +195,10 @@ public class UserResorce {
 			// remivendo o metodo userSevice usado para fazer login, e substituindo pelo metodo do sprint security
 			// User loggedUser = userService.login(user.getEmail(),user.getPassword());
 			// return ResponseEntity.ok(loggedUser);
-			
+
+		
+		
+		
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 		
 			// chamada de metodo authenticate

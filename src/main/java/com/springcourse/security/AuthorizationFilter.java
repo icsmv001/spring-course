@@ -33,6 +33,9 @@ public class AuthorizationFilter  extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		
+
+		
 		// buscando cabeçalho da requisicao do request
 		String  jwt = request.getHeader(HttpHeaders.AUTHORIZATION);
 		
@@ -57,14 +60,18 @@ public class AuthorizationFilter  extends OncePerRequestFilter {
 			List<String> roles = (List<String>) claims.get(SecurityConstants.JWT_ROLE_KEY);
 			
 			List<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
+			
 			roles.forEach(role -> {
 				grantedAuthority.add(new SimpleGrantedAuthority(role));
 			});
 			
 			Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, grantedAuthority);
+		
 			
 			// autenticacao de acesso de usuario
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+			
 			
 		} catch (Exception e) {
 			
@@ -78,10 +85,13 @@ public class AuthorizationFilter  extends OncePerRequestFilter {
 			
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);			
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+	
 			return;
 			
 		}
-				
+			
+		
+		
 		filterChain.doFilter(request, response);
 		
 	}

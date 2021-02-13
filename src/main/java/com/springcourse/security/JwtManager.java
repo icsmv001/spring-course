@@ -39,6 +39,7 @@ public class JwtManager {
 
 	// metodo que valida o token, faz o parse
 	public Claims parseTokens(String jwt)  throws JwtException {
+		
 		Claims claims = Jwts.parser()
 				.setSigningKey(SecurityConstants.API_KEY.getBytes())
 				.parseClaimsJws(jwt)

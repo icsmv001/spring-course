@@ -24,18 +24,21 @@ private RequestService requestService;
 	//metodo que valida se o usuario que deseja fazer alteracao de dados é o mesmo usuario que consta no token
 	public boolean isOwner(Long id) {
 		String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		Optional <User> result = userRepository.findByEmail(email);
-		
 		if(!result.isPresent()) throw new NotFoundException("There are not user with email = " + email);
-		
-		User user = result.get();
-		
-		return user.getId() == id;
+	    	User user = result.get();
+	    	
+			return (user.getId() == id);
+
 	}
 	
 	//metodo usurio responsavel pelo pedido é exatamente igual ao que consta no token.
 	public boolean isRequestOwner(Long id) {
 		String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		
+		
 		Optional<User> result = userRepository.findByEmail(email);
 		
 		if(!result.isPresent()) throw new NotFoundException("There are not user with email = " + email);
@@ -43,6 +46,9 @@ private RequestService requestService;
 		User user = result.get();
 		
 		Request request = requestService.getById(id);
+		
+		
+		
 		
 		return user.getId() == request.getOwner().getId();
 		

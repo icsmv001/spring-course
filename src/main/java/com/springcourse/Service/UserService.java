@@ -94,12 +94,12 @@ public class UserService implements UserDetailsService {
 		//Optional<User> result = userRepository.login(email,password);
 		
 //		
-//		System.out.println("-----------------------------" );
-//		System.out.println("ate aqui ok. Email:.  " + email );
-//		System.out.println("ate aqui ok..Password:" + password );
-//		System.out.println("ate aqui ok..result:" + result );
-//		System.out.println("-----------------------------" );
-//		
+		System.out.println("-----------------------------" );
+		System.out.println("ate aqui ok. Email:.  " + email );
+		System.out.println("ate aqui ok..Password:" + password );
+		System.out.println("ate aqui ok..result:" + result );
+		System.out.println("-----------------------------" );
+		
 		//return result.orElseThrow(()-> new NotFoundException("teste erro valor null "));
 		
 		return result.get();
@@ -119,14 +119,14 @@ public class UserService implements UserDetailsService {
         // teste se usuario existe ou nao
         if(!result.isPresent()) throw new UsernameNotFoundException("Dosen't exist user with email = " + username);
         User user = result.get();
-     
-        List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLSE_" +  user.getRole().name()));
+              
+        List<GrantedAuthority>  authorities = Arrays.asList(new  SimpleGrantedAuthority("ROLE_" +  user.getRole().name()));
         
         // montando user do sprint security
-        org.springframework.security.core.userdetails.User UserSpring = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        org.springframework.security.core.userdetails.User userSpring = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
                
 		
-		return UserSpring;
+		return userSpring;
 		
 	}
 			

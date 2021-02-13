@@ -20,40 +20,35 @@ import com.springcourse.Service.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	@Autowired 
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	@Autowired
 	private UserService userService;
-	
-	@Autowired 
+
+	@Autowired
 	private CustomPasswordEncoder passwordEncoder;
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	
 		auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
-		
 	}
-	
+		
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(HttpMethod.POST, "/users/login");
-		web.ignoring().antMatchers(HttpMethod.POST, "/users/logins");
-		
+	    web.ignoring().antMatchers(HttpMethod.POST, "/users/logins");
 	}
-	
-	//metodo para liberar rotas somente se o token for validado com sucesso.
+
+	// metodo para liberar rotas somente se o token for validado com sucesso.
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
-			.authorizeRequests()
-			.anyRequest().authenticated();
-		
+		           .authorizeRequests()
+		           .anyRequest()
+		           .authenticated();
+
 		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
-	
-	
-	
+
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {

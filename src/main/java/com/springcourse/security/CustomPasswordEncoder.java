@@ -18,8 +18,13 @@ public class CustomPasswordEncoder implements PasswordEncoder{
 	
 		String hash = HashUtil.getSecureHash(rawPassword.toString());
 		
-
-		return hash.contentEquals(encodedPassword);
+		return hash.equals(encodedPassword);
+		
+		//return hash.contentEquals(encodedPassword);
+		
+		
+		
+		
 	}
 
 }
