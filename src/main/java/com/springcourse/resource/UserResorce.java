@@ -86,9 +86,6 @@ public class UserResorce {
 	
 	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
 	@PreAuthorize("@accessManager.isOwner(#id)")
-	 
-	
-
 	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
 	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdatedto userdto){
@@ -102,7 +99,7 @@ public class UserResorce {
 		
 		user.setId(id);
 		User updateUser = userService.save(user);
-		System.out.println("UserResorce ate aqui ok5...");
+		//System.out.println("UserResorce ate aqui ok5...");
 		return ResponseEntity.ok(updateUser);
 		
 	}

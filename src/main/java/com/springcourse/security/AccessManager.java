@@ -47,8 +47,7 @@ private RequestService requestService;
 		
 		Request request = requestService.getById(id);
 		
-		
-		
+			
 		
 		return user.getId() == request.getOwner().getId();
 		
