@@ -43,8 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 		           .authorizeRequests()
-		           .anyRequest()
-		           .authenticated();
+		           .anyRequest().authenticated();
 
 		http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
@@ -56,3 +55,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 }
+
