@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.springcourse.domain.Request;
+import com.springcourse.domain.RequestFile;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.enums.RequestState;
 import com.springcourse.dto.RequestSavedto;
@@ -23,6 +26,7 @@ import com.springcourse.dto.RequestUpdateDto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 import com.springcourse.security.AccessManager;
+import com.springcourse.Service.RequestFileService;
 import com.springcourse.Service.RequestService;
 import com.springcourse.Service.RequestStageService;
 
@@ -35,16 +39,11 @@ public class RequestResource {
 	@Autowired private RequestService requestService;
 	@Autowired private RequestStageService stageService;
 	@Autowired private AccessManager accessManager;
-	
-
+	@Autowired private RequestFileService fileService;
 	
 	@PostMapping
 	public ResponseEntity<Request> save (@RequestBody @Valid RequestSavedto requestdto ){
-		
-		Request  request = requestdto.transformToRequest();
-		
-		
-		
+			Request  request = requestdto.transformToRequest();
 		Request createdRequest = requestService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRequest)	;
  	}
@@ -57,22 +56,11 @@ public class RequestResource {
 	@PutMapping("/{id}")
 	public ResponseEntity<Request> udpate (@PathVariable (name ="id") Long id,@RequestBody @Valid RequestUpdateDto requestdto){
 		Request request = requestdto.transformToRequest();
-		
-    	
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
-//		 System.out.println("ate aqui ok...");
+		//		 System.out.println("ate aqui ok...");
+		//		 System.out.println("ate aqui ok...");
 		request.setId(id);
 		Request updateRequest = requestService.update(request);
 		return ResponseEntity.ok(updateRequest);
-				
 	}	
 	
 	//metodos - get by id
@@ -141,6 +129,35 @@ public class RequestResource {
 			
 		}
 		
+	// para integracao entre o request Resource e o request file e preciso os 2 metodos abaixo:
+	//list
+	@GetMapping("/{id}/file")
+	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
+		@PathVariable (name ="id") Long id,
+		// parametros de entrada da requisicao
+		// parametros de entrada da requisicao
+		@RequestParam(value = "page", defaultValue ="0" ) int page,
+		@RequestParam(value = "size", defaultValue ="10") int size)  {
+			 
+        PageRequestModel pr = new PageRequestModel(page,size);
+		
+		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
+		return ResponseEntity.ok(pm);
+			
+		}
+	
+	//update  - 
+	//https://valor.co/?par1=2&par2=3
+	@PostMapping("/{id}/files")
+	public ResponseEntity<List<RequestFile>> upload(@RequestParam("files") MultipartFile[] files,@PathVariable (name ="id") Long id) {
+	 List<RequestFile>	requestFiles =  fileService.upload(id, files);
+	 
+	 return ResponseEntity.status(HttpStatus.CREATED).body(requestFiles);
+	 
+	}
+	
+	
+	
 	
 	
 	
