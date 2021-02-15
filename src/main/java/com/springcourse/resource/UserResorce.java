@@ -31,8 +31,8 @@ import com.springcourse.domain.User;
 import com.springcourse.dto.UserLoginDto;
 import com.springcourse.dto.UserLoginResponsedto;
 import com.springcourse.dto.UserSavedto;
+import com.springcourse.dto.UserUpdateDto;
 import com.springcourse.dto.UserUpdateRoleDto;
-import com.springcourse.dto.UserUpdatedto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 import com.springcourse.security.AccessManager;
@@ -60,6 +60,8 @@ public class UserResorce {
 	// ESTA NOTACAO FAZ COM QUE SOMENTE O ADMINISTRADOR POSSA USAR O METODO RESPONSEENTY<USER>,
 	// atendendo ao item 1, de requisitos funcionais; adm pode registrar novo registro.
 	@Secured({"ROLE_ADMINISTRATOR"})
+
+	
 	// metodo save com tratamento de validacao de entrada
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody  @Valid UserSavedto userdto){
@@ -85,23 +87,15 @@ public class UserResorce {
 //	
 	
 	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
-	@PreAuthorize("@accessManager.isOwner(#id)")
+   // -->>>>>>  @PreAuthorize("@accessManager.isOwner(#id)")
 	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdatedto userdto){
-	
-		
-		
-	
-			
-		
+	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdateDto userdto){
 		User user = userdto.transformToUser();
-		
 		user.setId(id);
 		User updateUser = userService.save(user);
 		//System.out.println("UserResorce ate aqui ok5...");
 		return ResponseEntity.ok(updateUser);
-		
 	}
 	
 	

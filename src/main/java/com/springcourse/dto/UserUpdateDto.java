@@ -11,12 +11,13 @@ import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestStage;
 import com.springcourse.domain.User;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 
-public class UserUpdatedto {
+public class UserUpdateDto {
 	
 	@NotBlank (message = "Nome requerido")
 	private String name;
@@ -36,5 +37,4 @@ public class UserUpdatedto {
 		 return user;	 
 	}
 	
-
 }

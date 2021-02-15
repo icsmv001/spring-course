@@ -3,6 +3,7 @@ package com.springcourse.security;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import com.springcourse.domain.Request;
 import com.springcourse.domain.User;
 import com.springcourse.exception.NotFoundException;
 import com.springcourse.repository.UserRepository;
+
 
 @Component("accessManager")
 public class AccessManager {
@@ -35,6 +37,8 @@ private RequestService requestService;
 	
 	//metodo usurio responsavel pelo pedido é exatamente igual ao que consta no token.
 	public boolean isRequestOwner(Long id) {
+		
+		
 		String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		
