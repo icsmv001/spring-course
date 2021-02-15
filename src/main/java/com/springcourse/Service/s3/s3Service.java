@@ -18,13 +18,13 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.springcourse.model.UploadedFileModel;
 
 @Service
-public class s3Service {
+public class S3Service {
 	private AmazonS3 s3;
 	private String bucketName;
 	private String region;
 	
 	@Autowired
-	public s3Service(AmazonS3 amazonS3, String awsRegion, String awsS3Backut ) {
+	public S3Service(AmazonS3 amazonS3, String awsRegion, String awsS3Backut ) {
 		this.s3 = amazonS3;
 		this.bucketName = awsS3Backut;
 		this.region = awsRegion;

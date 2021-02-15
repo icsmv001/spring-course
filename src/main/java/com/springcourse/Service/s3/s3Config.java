@@ -15,7 +15,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
-public class s3Config {
+public class S3Config {
 	
 	// valores das proprietadas do AWS
 	@Value("${app.aws.s3.access-key}")
