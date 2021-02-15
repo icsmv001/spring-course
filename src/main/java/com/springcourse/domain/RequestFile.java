@@ -1,6 +1,7 @@
 package com.springcourse.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springcourse.domain.enums.RequestState;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +24,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 @Entity (name = "request_file")
-public class RequestFile implements Serializable{
+public class RequestFile implements Serializable {
+	
 	/**
 	 * 
 	 */
@@ -32,18 +35,17 @@ public class RequestFile implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="subject",length=100, nullable = false)
+	@Column( length=100, nullable = false)
 	private String name;
+	
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String location;
-	
-	//varios ficheiros para um pedido -- ManyToONE, sendo ignorando na serializacao, pois nao sera retornado dados do pedido
+
+
 	@Getter(onMethod = @__({@JsonIgnore})) // notacao para que no momento da serializacao do request, seja ignorado o relacionamento com o stages, que tem um campo id_request tambem.
 	@ManyToOne
 	@JoinColumn(name="request_id",  nullable = false)
-    private Request request;
+	private Request request;
 	
-	
-
 }
