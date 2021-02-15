@@ -68,5 +68,9 @@ public class Request implements Serializable{
 	@OneToMany(mappedBy = "request")
 	private List<RequestStage> stages = new ArrayList<RequestStage>();
 	
+	@Getter(onMethod = @__({@JsonIgnore})) // notacao para que no momento da serializacao do request, seja ignorado o relacionamento com o stages, que tem um campo id_request tambem.
+	@OneToMany(mappedBy = "request")
+	private List<RequestFile> files = new ArrayList<RequestFile>();
+	
 	
 }
