@@ -36,7 +36,7 @@ public class RequestUpdateDto {
 		
 		//metodo que transforma a class RequestSAveDto em um objeto Request
 		public Request transformToRequest() {
-			Request request = new Request(null, this.subject, this.description,null, this.state, this.owner, this.stages);
+			Request request = new Request(null, this.subject, this.description,null, this.state, this.owner, this.stages,null);
 			return request;
 			
 		}

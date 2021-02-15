@@ -33,7 +33,7 @@ public class RequestSavedto {
 	
 	//metodo que transforma a class RequestSAveDto em um objeto Request
 	public Request transformToRequest() {
-		Request request = new Request(null, this.subject, this.description,null, null, this.owner, this.stages);
+		Request request = new Request(null, this.subject, this.description,null, null, this.owner, this.stages,null);
 		return request;
 	
 	}
