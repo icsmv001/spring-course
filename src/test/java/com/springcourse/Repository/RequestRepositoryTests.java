@@ -33,7 +33,7 @@ public class RequestRepositoryTests {
 		owner.setId(37L);
 		
 	//	Request request = new Request(id,  subject, description, creationDate, state, owner, stages);
-		Request request = new Request(null, "Novo Laptop HP", "Pretendo obter um laptop HP", new Date(), RequestState.OPEN,  owner, null);
+		Request request = new Request(null, "Novo Laptop HP", "Pretendo obter um laptop HP", new Date(), RequestState.OPEN,  owner, null, null);
 	
 		Request createdRequest = requestRepository.save(request);
 		
@@ -48,7 +48,7 @@ public class RequestRepositoryTests {
 		User owner = new User();
 		owner.setId(37L);
 		
-		Request request = new Request(6L, "Novo Laptop HP", "Pretendo obter um laptop HP, de RAM 16 GB", null, RequestState.OPEN, owner, null);
+		Request request = new Request(6L, "Novo Laptop HP", "Pretendo obter um laptop HP, de RAM 16 GB", null, RequestState.OPEN, owner, null, null);
 	
 		Request updatedRequest = requestRepository.save(request);
 		
