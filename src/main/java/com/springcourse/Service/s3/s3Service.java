@@ -3,6 +3,7 @@ package com.springcourse.Service.s3;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class S3Service {
 		//para enviar cada ficheiro por vez
 		for (MultipartFile file : files) {
 			String originalName = file.getOriginalFilename();
-			String s3FileName = originalName ;
+			String s3FileName = getUniqueFileName(originalName) ;
 		
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(file.getSize());
@@ -74,7 +75,10 @@ public class S3Service {
 		
 	}
 	
-	
+	private String getUniqueFileName(String filename) {
+		return UUID.randomUUID().toString() + "_" + filename;
+		
+	}
 	
 	
 	
