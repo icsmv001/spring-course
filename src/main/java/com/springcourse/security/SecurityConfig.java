@@ -2,6 +2,7 @@ package com.springcourse.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,7 @@ import com.springcourse.Service.UserService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+//@ComponentScan(basePackages = {"com.in.security", "com.in.rest","com.in.service"})
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired

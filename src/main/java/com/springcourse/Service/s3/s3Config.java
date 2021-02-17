@@ -9,7 +9,6 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
-//import com.amazonaws.partitions.model.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -17,56 +16,54 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 @Configuration
 public class S3Config {
 	
-	// valores das proprietadas do AWS
+
+
 	@Value("${app.aws.s3.access-key}")
 	private String accessKey;
 	
-	@Value("${app.aws.s3.secretKey}")
+	@Value("${app.aws.s3.secret-key}")
 	private String secretKey;
-	
-	@Value("${app.aws.s3.bucketName}")
+
+	@Value("${app.aws.s3.bucket-name}")
 	private String bucketName;
 	
-	
-	//metodo para retornar o cliente s3  - instancia do S3, tornando ele um tipo Bean, para que possa se acessado de outra classe dentro do service 
-    @Bean(name= "awsS3")	
-	public AmazonS3 getAmazonS3(){
+	// instancia do S3
+	@Bean(name = "awsS3")
+	public AmazonS3 getAmazonS3() {
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
 		
-		// criando o client do S3
 		AmazonS3 s3 = AmazonS3ClientBuilder
 				.standard()
 				.withCredentials(credentialsProvider)
 				.withRegion(getRegion())
-				.build();
+		        .build();
 		
 		return s3;
 		
-				
-				
-				
+		
 		
 	}
 	
-	// s3 region
-    @Bean(name= "awsRegion")	
+		
+	// Regiao do s3
+	@Bean(name = "awsRegion")
 	public String getRegion() {
-		return Region.getRegion(Regions.AF_SOUTH_1).getName();
+		return	Region.getRegion(Regions.US_EAST_1).getName();
+		   	
+	}
+	
+	// bucket
+	@Bean("awsS3Bucket")
+	public String getBucket() {
+		return bucketName;
 		
 	}
 	
 	
 	
-	// s3 bucket
-    @Bean(name= "awsS3Backut")
-    public String getBucket() {
-    	return bucketName;
-		
-	}
 	
+	// nome do buket do s3
 	
-	
- 
 
 }

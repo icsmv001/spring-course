@@ -1,11 +1,8 @@
 package com.springcourse.Service.s3;
 
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,35 +16,41 @@ import com.springcourse.model.UploadedFileModel;
 
 @Service
 public class S3Service {
+
 	private AmazonS3 s3;
-	private String bucketName;
+	private String bucketname;
 	private String region;
 	
 	@Autowired
-	public S3Service(AmazonS3 amazonS3, String awsRegion, String awsS3Backut ) {
+	public S3Service(AmazonS3 amazonS3, String awsRegion, String awsS3Bucket) {
 		this.s3 = amazonS3;
-		this.bucketName = awsS3Backut;
+		this.bucketname = awsS3Bucket;
 		this.region = awsRegion;
 	}
 	
-	// retornar lista de ficheiro carregados, ou seja lista de itens no formato do uploado model
-	public List<UploadedFileModel> upload(MultipartFile[] files) {
+	//metodo do upload dos ficheiros para o S3 / uma lista
+	public List<UploadedFileModel> upload(MultipartFile[] files){
 		
 		List<UploadedFileModel> uploadedFiles = new ArrayList<UploadedFileModel>();
 		
+		
+		
+		//para enviar cada ficheiro por vez
 		for (MultipartFile file : files) {
 			String originalName = file.getOriginalFilename();
-			String s3FileName = getUniqueFileName(originalName);
-			
+			String s3FileName = originalName ;
+		
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(file.getSize());
 			
+			// requisicao
 			try {
-				PutObjectRequest request = new PutObjectRequest(bucketName, s3FileName, file.getInputStream(), metadata)
-													.withCannedAcl(CannedAccessControlList.PublicRead);
+				PutObjectRequest request = new PutObjectRequest(bucketname, s3FileName, file.getInputStream(), metadata)
+						.withCannedAcl(CannedAccessControlList.PublicRead);
 				
 				s3.putObject(request);
 				
+				//retornar os dados do ficheiro nome e localizacao
 				String location = getFileLocation(s3FileName);
 				
 				UploadedFileModel uploadedFileModel = new UploadedFileModel(originalName, location);
@@ -59,17 +62,20 @@ public class S3Service {
 			}
 			
 		}
-		
+				
 		return uploadedFiles;
 		
 	}
-
+	
+	
+	// localizacao do bucket no s3
 	private String getFileLocation(String fileName) {
-		return "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + fileName;
+		return "https://" + bucketname + ".s3." + region + ".amazonaws.com/" + fileName;
+		
 	}
 	
-	private String getUniqueFileName(String fileName) {
-		return UUID.randomUUID().toString() + "_" + fileName;
-	}
+	
+	
+	
 	
 }

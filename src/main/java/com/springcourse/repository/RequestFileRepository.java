@@ -14,9 +14,12 @@ import com.springcourse.domain.RequestFile;
 public interface RequestFileRepository extends  JpaRepository <RequestFile, Long>{
 	
 	// metodo que faz upload
-    public Page<RequestFile> findAllByrequestId(Long id, Pageable pageable);
+	
 	
 	//metodo para listar os ficheiros de um pedido
+    public Page<RequestFile> findAllByrequestId(Long id, Pageable pageable);
+	
+	
 	
 
 }

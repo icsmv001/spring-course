@@ -17,19 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import com.springcourse.Service.RequestService;
+import com.springcourse.Service.RequestStageService;
 import com.springcourse.domain.Request;
 import com.springcourse.domain.RequestFile;
 import com.springcourse.domain.RequestStage;
-import com.springcourse.domain.enums.RequestState;
 import com.springcourse.dto.RequestSavedto;
 import com.springcourse.dto.RequestUpdateDto;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 import com.springcourse.security.AccessManager;
-import com.springcourse.Service.RequestFileService;
-import com.springcourse.Service.RequestService;
-import com.springcourse.Service.RequestStageService;
-
 
 
 
@@ -38,8 +36,6 @@ import com.springcourse.Service.RequestStageService;
 public class RequestResource {
 	@Autowired private RequestService requestService;
 	@Autowired private RequestStageService stageService;
-	@Autowired private AccessManager accessManager;
-	@Autowired private RequestFileService fileService;
 	
 	@PostMapping
 	public ResponseEntity<Request> save (@RequestBody @Valid RequestSavedto requestdto ){
@@ -51,7 +47,7 @@ public class RequestResource {
 	
 	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
 	// se authoriza for OK, indica que o usuario que consta no token igual ao que esta tentando modificar os dados.
-	@PreAuthorize("@accessManager.isRequestOwner(#id)")
+	//@PreAuthorize("@accessManager.isRequestOwner(#id)")
 	//metodos - update
 	@PutMapping("/{id}")
 	public ResponseEntity<Request> udpate (@PathVariable (name ="id") Long id,@RequestBody @Valid RequestUpdateDto requestdto){
@@ -129,32 +125,33 @@ public class RequestResource {
 			
 		}
 		
-	// para integracao entre o request Resource e o request file e preciso os 2 metodos abaixo:
-	//list
-	@GetMapping("/{id}/file")
-	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
-		@PathVariable (name ="id") Long id,
-		// parametros de entrada da requisicao
-		// parametros de entrada da requisicao
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
-			 
-        PageRequestModel pr = new PageRequestModel(page,size);
-		
-		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
-		return ResponseEntity.ok(pm);
-			
-		}
-	
-	//update  - 
-	//https://valor.co/?par1=2&par2=3
-	@PostMapping("/{id}/files")
-	public ResponseEntity<List<RequestFile>> upload(@RequestParam("files") MultipartFile[] files,@PathVariable (name ="id") Long id) {
-	 List<RequestFile>	requestFiles =  fileService.upload(id, files);
-	 
-	 return ResponseEntity.status(HttpStatus.CREATED).body(requestFiles);
-	 
-	}
+//	// para integracao entre o request Resource e o request file e preciso os 2 metodos abaixo:
+//	//list
+//	@GetMapping("/{id}/file")
+//	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
+//		@PathVariable (name ="id") Long id,
+//		// parametros de entrada da requisicao
+//		// parametros de entrada da requisicao
+//		@RequestParam(value = "page", defaultValue ="0" ) int page,
+//		@RequestParam(value = "size", defaultValue ="10") int size)  {
+//			 
+//        PageRequestModel pr = new PageRequestModel(page,size);
+//		
+//		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
+//		return ResponseEntity.ok(pm);
+//			
+//		}
+//	
+//	//update  - 
+//	//https://valor.co/?par1=2&par2=3
+//	@PostMapping("/{id}/files")
+//	public ResponseEntity<List<RequestFile>> upload(@RequestParam("files") MultipartFile[] files,@PathVariable (name ="id") Long id) {
+//	 List<RequestFile>	requestFiles =  fileService.upload(id, files);
+//	
+//	 return ResponseEntity.status(HttpStatus.CREATED).body(requestFiles);
+//	 
+//	}
+//	
 	
 	
 	
