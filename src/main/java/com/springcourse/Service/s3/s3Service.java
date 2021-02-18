@@ -34,8 +34,7 @@ public class S3Service {
 		
 		List<UploadedFileModel> uploadedFiles = new ArrayList<UploadedFileModel>();
 		
-		
-		
+				
 		//para enviar cada ficheiro por vez
 		for (MultipartFile file : files) {
 			String originalName = file.getOriginalFilename();

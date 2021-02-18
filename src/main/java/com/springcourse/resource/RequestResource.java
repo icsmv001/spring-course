@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.springcourse.Service.RequestFileService;
 import com.springcourse.Service.RequestService;
 import com.springcourse.Service.RequestStageService;
 import com.springcourse.domain.Request;
@@ -36,6 +36,7 @@ import com.springcourse.security.AccessManager;
 public class RequestResource {
 	@Autowired private RequestService requestService;
 	@Autowired private RequestStageService stageService;
+	@Autowired private RequestFileService fileService;
 	
 	@PostMapping
 	public ResponseEntity<Request> save (@RequestBody @Valid RequestSavedto requestdto ){
@@ -124,34 +125,36 @@ public class RequestResource {
 		return ResponseEntity.ok(pm);
 			
 		}
+	
+	
+// deste ponto abaixo, trata de configuracao para usar metodos para upload e gravacao de dados de arquivos no AWS S3 - BUCKET
 		
-//	// para integracao entre o request Resource e o request file e preciso os 2 metodos abaixo:
-//	//list
-//	@GetMapping("/{id}/file")
-//	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
-//		@PathVariable (name ="id") Long id,
-//		// parametros de entrada da requisicao
-//		// parametros de entrada da requisicao
-//		@RequestParam(value = "page", defaultValue ="0" ) int page,
-//		@RequestParam(value = "size", defaultValue ="10") int size)  {
-//			 
-//        PageRequestModel pr = new PageRequestModel(page,size);
-//		
-//		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
-//		return ResponseEntity.ok(pm);
-//			
-//		}
-//	
+// para integracao entre o request Resource e o request file, USAR 2 ( LIST E UPDATE) -- GET PEGAR OS FICHEIROS DE UM PEDIDO
+//list
+
+	@GetMapping("/{id}/files")
+	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
+		@PathVariable (name ="id") Long id,
+		@RequestParam(value = "page", defaultValue ="0" ) int page,
+		@RequestParam(value = "size", defaultValue ="10") int size)  {
+			 
+        PageRequestModel pr = new PageRequestModel(page,size);
+		
+		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
+		return ResponseEntity.ok(pm);
+	}
+	
 //	//update  - 
-//	//https://valor.co/?par1=2&par2=3
-//	@PostMapping("/{id}/files")
-//	public ResponseEntity<List<RequestFile>> upload(@RequestParam("files") MultipartFile[] files,@PathVariable (name ="id") Long id) {
-//	 List<RequestFile>	requestFiles =  fileService.upload(id, files);
-//	
-//	 return ResponseEntity.status(HttpStatus.CREATED).body(requestFiles);
-//	 
-//	}
-//	
+//	//https://valor.com/?par1=2&par2=3
+
+	@PostMapping("/{id}/files")
+	public ResponseEntity<List<RequestFile>> upload(@RequestParam("files") MultipartFile[] files,@PathVariable (name ="id") Long id) {
+	 List<RequestFile>	requestFiles =  fileService.upload(id, files);
+	
+	 return ResponseEntity.status(HttpStatus.CREATED).body(requestFiles);
+	 
+	}
+	
 	
 	
 	
