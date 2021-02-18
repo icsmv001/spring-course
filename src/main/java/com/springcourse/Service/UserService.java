@@ -94,12 +94,12 @@ public class UserService implements UserDetailsService {
 		//Optional<User> result = userRepository.login(email,password);
 		
 //		
-		System.out.println("-----------------------------" );
-		System.out.println("ate aqui ok. Email:.  " + email );
-		System.out.println("ate aqui ok..Password:" + password );
-		System.out.println("ate aqui ok..result:" + result );
-		System.out.println("-----------------------------" );
-		
+//		System.out.println("-----------------------------" );
+//		System.out.println("ate aqui ok. Email:.  " + email );
+//		System.out.println("ate aqui ok..Password:" + password );
+//		System.out.println("ate aqui ok..result:" + result );
+//		System.out.println("-----------------------------" );
+//		
 		//return result.orElseThrow(()-> new NotFoundException("teste erro valor null "));
 		
 		return result.get();

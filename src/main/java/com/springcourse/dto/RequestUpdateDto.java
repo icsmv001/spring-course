@@ -36,6 +36,7 @@ public class RequestUpdateDto {
 		
 		//metodo que transforma a class RequestSAveDto em um objeto Request
 		public Request transformToRequest() {
+			// adicionado ao final dos parametros, mais um atributo null, para representar o atributo files do dto.request
 			Request request = new Request(null, this.subject, this.description,null, this.state, this.owner, this.stages,null);
 			return request;
 			
