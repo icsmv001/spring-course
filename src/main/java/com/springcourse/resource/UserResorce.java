@@ -49,7 +49,6 @@ public class UserResorce {
 	@Autowired private AccessManager accessManager;
 	
 	
-
 //	// metodo save sem tratamento de validacao de entrada
 //	@PostMapping
 //	public ResponseEntity<User> save(@RequestBody  User user){
@@ -87,7 +86,7 @@ public class UserResorce {
 //	
 	
 	// metodo para autorizar somente o mesmo usuario que faz a solicitacao, se for o mesmo que consta no token
-   // -->>>>>>  @PreAuthorize("@accessManager.isOwner(#id)")
+    @PreAuthorize("@accessManager.isOwner(#id)")
 	// metodo update com tratamento de validacao de entrada
 	@PutMapping("/{id}")
 	public ResponseEntity<User> update(@PathVariable(name="id") Long id, @RequestBody @Valid  UserUpdateDto userdto){

@@ -30,8 +30,8 @@ private RequestService requestService;
 		if(!result.isPresent()) throw new NotFoundException("There are not user with email = " + email);
 	    	User user = result.get();
 	    	
-			return (user.getId() == id);
-
+			//return (user.getId() == id);
+	    	return user.getId().equals(id);
 	}
 	
 	//metodo usurio responsavel pelo pedido é exatamente igual ao que consta no token.
