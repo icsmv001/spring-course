@@ -1,6 +1,7 @@
 package com.springcourse.resource;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -107,6 +108,7 @@ public class UserResorce {
 	}
 	
 	
+	
 	// metodo list sem paginacao 
 	@GetMapping 
 	public ResponseEntity<List<User>> listAll()  {
@@ -114,15 +116,34 @@ public class UserResorce {
 		return ResponseEntity.ok(users);
 	}
 		
+	// metodo list sem paginacao 
+	@GetMapping (value = "/login")
+	public ResponseEntity<List<User>> listAll1()  {
+		List <User> users = userService.listAll();
+		return ResponseEntity.ok(users);
+	}
+		
+	
+	
 	
 	// metodo list com  paginacao 
 	@RequestMapping(value = "/pages")
 	public ResponseEntity<PageModel<User>> listAll(
-		// parametros de entrada da requisicao
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
+		// parametros de entrada da requisicao // versao inicial 
+		//@RequestParam(value = "page", defaultValue ="0" ) int page,
+		//@RequestParam(value = "size", defaultValue ="10") int size)  {
 		
-		PageRequestModel pr = new PageRequestModel(page, size);
+		// parametros de entrada da requisicao - nova versao otimizada
+		@RequestParam Map<String, String> params ){
+		
+	     
+		// versao anterior
+		//PageRequestModel pr = new PageRequestModel(page,size);
+		
+		//versao otimizada
+		PageRequestModel pr = new PageRequestModel(params);
+		
+		
 		PageModel<User> pm = userService.listAllOnLazyModel(pr);
 	    return ResponseEntity.ok(pm);		
 	}
@@ -229,15 +250,20 @@ public class UserResorce {
 	@GetMapping("/{id}/requestsPages")
 	public ResponseEntity<PageModel<Request>> listAllRequestsById(
 		@PathVariable(name="id") Long id,
-		// parametros de entrada da requisicao
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
+//		// parametros de entrada da requisicao - versao anterior 
+//		@RequestParam(value = "page", defaultValue ="0" ) int page,
+//		@RequestParam(value = "size", defaultValue ="10") int size)  {
+//		PageRequestModel pr = new PageRequestModel(page, size);
+//		PageModel<Request> pm = requestService.listAllByOwnerIdOnLazyModel(id, pr);
+//        return ResponseEntity.ok(pm);
 		
-		PageRequestModel pr = new PageRequestModel(page, size);
+		// parametros de entrada da requisicao - versao otimizada 
+		@RequestParam Map<String, String> params ){
+		PageRequestModel pr = new PageRequestModel(params);
 		PageModel<Request> pm = requestService.listAllByOwnerIdOnLazyModel(id, pr);
         return ResponseEntity.ok(pm);
-		
-
+        
+        
 	}
 		
 		

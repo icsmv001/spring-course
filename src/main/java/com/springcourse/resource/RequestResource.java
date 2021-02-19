@@ -1,5 +1,6 @@
 package com.springcourse.resource;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -79,13 +80,20 @@ public class RequestResource {
 	// metodo com paginação
 	@GetMapping
 	public ResponseEntity<PageModel<Request>> listAll(
-		// parametros de entrada da requisicao
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
+    // parametros de entrada da requisicao versao antiga
+    //	@RequestParam(value = "page", defaultValue ="0" ) int page,
+    //	@RequestParam(value = "size", defaultValue ="10") int size)  {
+    //	PageRequestModel pr = new PageRequestModel(page, size);
 			
-		PageRequestModel pr = new PageRequestModel(page, size);
-		PageModel<Request> pm = requestService.listAllOnLazyModel(pr);
-	    return ResponseEntity.ok(pm);
+    // parametros de entrada da requisicao versao otimizada
+	   @RequestParam Map<String, String> params ){  
+	   PageRequestModel pr = new PageRequestModel(params);
+			
+	   PageModel<Request> pm = requestService.listAllOnLazyModel(pr);
+	   return ResponseEntity.ok(pm);
+	    
+	    
+	    
 	}
 	
 	
@@ -114,14 +122,15 @@ public class RequestResource {
 	@GetMapping("/{id}/request-stages-pages")
 	public ResponseEntity<PageModel<RequestStage>> listAllStagesById(
 		@PathVariable (name ="id") Long id,
-		// parametros de entrada da requisicao
-		// parametros de entrada da requisicao
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
-			 
-        PageRequestModel pr = new PageRequestModel(page,size);
-		
-		PageModel<RequestStage> pm = stageService.listAllByRequestIdOnLazyModel(id, pr);
+//		// parametros de entrada da requisicao versao antiga
+//		@RequestParam(value = "page", defaultValue ="0" ) int page,
+//		@RequestParam(value = "size", defaultValue ="10") int size)  {
+//	    PageRequestModel pr = new PageRequestModel(page,size);
+	    
+		// parametros de entrada da requisicao versao antiga
+		@RequestParam Map<String, String> params ){  
+		PageRequestModel pr = new PageRequestModel(params);	    
+	    PageModel<RequestStage> pm = stageService.listAllByRequestIdOnLazyModel(id, pr);
 		return ResponseEntity.ok(pm);
 			
 		}
@@ -135,11 +144,15 @@ public class RequestResource {
 	@GetMapping("/{id}/files")
 	public ResponseEntity<PageModel<RequestFile>> listAllFilesById(
 		@PathVariable (name ="id") Long id,
-		@RequestParam(value = "page", defaultValue ="0" ) int page,
-		@RequestParam(value = "size", defaultValue ="10") int size)  {
-			 
-        PageRequestModel pr = new PageRequestModel(page,size);
-		
+//		// parametros de entrada da requisicao versao antiga
+//		@RequestParam(value = "page", defaultValue ="0" ) int page,
+//		@RequestParam(value = "size", defaultValue ="10") int size)  {
+//	    PageRequestModel pr = new PageRequestModel(page,size);
+	
+	 // parametros de entrada da requisicao versao antiga
+	 		@RequestParam Map<String, String> params ){  
+	 		PageRequestModel pr = new PageRequestModel(params);	
+	    
 		PageModel<RequestFile> pm = fileService.listAllByRequestId(id, pr);
 		return ResponseEntity.ok(pm);
 	}
