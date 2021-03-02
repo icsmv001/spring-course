@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -73,7 +72,9 @@ public class UserService implements UserDetailsService {
     
     //metodo para carregar lista sob demanda
     public PageModel<User> listAllOnLazyModel(PageRequestModel pr) {
-    	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+    	
+    	Pageable pageable = pr.toSpringPageRequest();
+    	
     	Page<User> page =userRepository.findAll(pageable);
     	
     	PageModel<User> pm = new PageModel<User>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());

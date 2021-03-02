@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +68,7 @@ public class RequestStageService {
 	// metodo para carregar lista sob demanda de paginacao passando o id do usuario
 		public PageModel<RequestStage> listAllByRequestIdOnLazyModel(Long requestId, PageRequestModel pr) {
 			
-	    	Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+	    	Pageable pageable = pr.toSpringPageRequest();
 	    	
 	    	Page<RequestStage> page = requestStageRepository.findAllByRequestId(requestId, pageable);
 	            	

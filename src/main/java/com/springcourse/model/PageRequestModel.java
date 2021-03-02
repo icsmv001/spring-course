@@ -4,6 +4,8 @@ package com.springcourse.model;
 
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,12 @@ public class PageRequestModel {
 		//validar se parametros foram passados, caso nao usar valor default
 		if ( params.containsKey("page")) page = Integer.parseInt(params.get("page"));
 		if ( params.containsKey("size")) size = Integer.parseInt(params.get("size"));
+	}
+	
+	// metodo que retorna um page request do spring, dado os parametros do pagerequest model
+	public PageRequest toSpringPageRequest (){
+		return PageRequest.of(page, size);
+		
 	}
 	
 }
