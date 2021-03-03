@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +21,7 @@ import com.springcourse.exception.NotFoundException;
 import com.springcourse.model.PageModel;
 import com.springcourse.model.PageRequestModel;
 import com.springcourse.repository.UserRepository;
+import com.springcourse.specification.UserSpecification;
 
 @Service
 // esta camada de servico, tem a resposavilidade de chamar os metodos do userRepository
@@ -74,8 +76,13 @@ public class UserService implements UserDetailsService {
     public PageModel<User> listAllOnLazyModel(PageRequestModel pr) {
     	
     	Pageable pageable = pr.toSpringPageRequest();
+    	//adicionado codigo para uso do metodo userspecification / seach
+    	Specification<User> spec = UserSpecification.search(pr.getSearch());
     	
-    	Page<User> page =userRepository.findAll(pageable);
+    	// subtituido para usar o metodo specitication com findall e filtro  	
+    	// Page<User> page =userRepository.findAll(pageable);
+    	
+    	Page<User> page =userRepository.findAll(spec, pageable);
     	
     	PageModel<User> pm = new PageModel<User>((int)page.getTotalElements(), page.getSize(), page.getTotalPages(), page.getContent());
     	return pm;
